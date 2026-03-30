@@ -1,0 +1,36 @@
+Openclaw Docker本地部署
+OpenClaw Docker部署演示
+参考视频：https://www.bilibili.com/video/BV1Buw2zSEZ7/?spm_id_from=333.1007.top_right_bar_window_custom_collection.content.click
+1、环境检查：
+Docker Desktop（windows x64） 下载地址：https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe?utm_source=docker&utm_medium=webreferral&utm_campaign=dd-smartbutton&utm_location=module
+WSL 2（Windows Subsystem for Linux 2）：gethub地址：https://github.com/microsoft/WSL/releases（wsl.2.7.1.0.x64.msi
+）目前最新版本是2.7.1.0
+git工具下载https://git-scm.com(安装包安装)
+2、安装并初始化Openclaw：
+安装Openclaw，进行初始化，skills和相关设置可以先不跳过，大模型我选择的是Coding Plan月付费模式
+OpenClaw https://github.com/openclaw/openclaw.git（通过git工具来下载  命令是 git clone 地）
+命令：git clone  https://github.com/openclaw/openclaw.git
+3、创建并初始化Docker容器：
+命令：OPENCLAW_GATEWAY_BIND=loopback ./docker-setup.sh
+安装完毕后分别执行一下命令：
+• 查询容器状态：docker compose ps
+• .env文件修改命令：vim.evn   (修改loopback到lan)
+• 跳过访问来源校验命令：docker compose -f docker-compose.yml run --rm openclaw-cli 
+config set gateway.controlUi.allowedOrigins '["*"]' --strict-json
+• 跳过设备校验命令：docker compose -f docker-compose.yml run --rm openclaw-cli 
+config set gateway.controlUi.dangerouslyDisableDeviceAuth true
+• 网关安全校验降级命令：docker compose -f docker-compose.yml run --rm openclaw-cli 
+config set gateway.controlUi.dangerouslyDisableDeviceAuth true
+• 地址：http://127.0.0.1:18789  登录需要输入Token，获取Token命令:cat .env
+如果遇到登录报错，如：pairing required，可以输入如下命令：
+docker compose run --rm openclaw-cli devices list# 批准设备
+docker compose exec openclaw-gateway node dist/index.js devices approve <请求ID>
+3、安装飞书插件：
+ 安装插件：docker compose -f docker-compose.yml run --rm openclaw-cli 
+plugins install @openclaw/feishu
+飞书配置机器人说明：https://docs.openclaw.ai/zh-CN/channels/feishu
+
+
+说明：
+1、文件路径，可以根据需要，cmd切换到D盘，如我设置的位置为D:\openclaw-docker\openclaw
+2、Openclaw控制台中文界面位置在左侧菜单中的控制-概览-语言，改成中文
