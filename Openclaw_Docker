@@ -60,9 +60,10 @@ plugins install @openclaw/feishu
 Openclaw Docker本地部署(威联通Docker)
 映像：justlikemaki/openclaw-docker-cn-im:latest
 
+注意：开启root权限
 
-
-局域网访问：openclaw dashboard --no-open（首次登录核对登录token）
+openclaw dashboard --no-open  
+su node
 
 
 
