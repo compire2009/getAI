@@ -58,164 +58,77 @@ plugins install @openclaw/feishu
 
 
 Openclaw Docker本地部署(威联通Docker)
-映像：justlikemaki/openclaw-docker-cn-im:latest
+参考视频：https://www.bilibili.com/video/BV13PAJzAECZ/?spm_id_from=333.1387.homepage.video_card.click&vd_source=c0fd5e7b846438f5f6cab642d2c57ffc
+映像：docker.1ms.run/justlikemaki/openclaw-docker-cn-im:latest
 
 注意：开启root权限
 
 openclaw dashboard --no-open  
 su node
-
-
-
-
-
 进入后先切换到 node 用户
 
 su node
 
-
-
-
-
+Yaml程序代码如下：
 version: '3.8'
-
-
-
 x-openclaw-common-env: &openclaw-common-env
-
  TZ: Asia/Shanghai
-
  HOME: /home/node
-
  TERM: xterm-256color
 
-
-
  SYNC_OPENCLAW_CONFIG: "true"
-
  SYNC_MODEL_CONFIG: "true"
-
-
-
- MODEL_ID: "MiniMax-M2.5"
-
- PRIMARY_MODEL: "MiniMax-M2.5"
-
+ MODEL_ID: "MiniMax-M2.7"
+ PRIMARY_MODEL: "MiniMax-M2.7"
  IMAGE_MODEL_ID: ""
-
  BASE_URL: "https://api.minimaxi.com/v1"
-
  API_KEY: "密钥"
-
  API_PROTOCOL: "openai-completions"
-
  CONTEXT_WINDOW: "200000"
-
  MAX_TOKENS: "200000"
-
-
-
  DM_POLICY: "open"
-
  GROUP_POLICY: "open"
-
  ALLOW_FROM: "*"
-
-
-
  TELEGRAM_BOT_TOKEN: "密钥"
-
  TELEGRAM_DM_POLICY: "pairing"
-
  TELEGRAM_ALLOW_FROM: "账户数字id"
-
  TELEGRAM_GROUP_POLICY: "disabled"
-
-
-
  FEISHU_DEFAULT_ACCOUNT: "default"
-
  FEISHU_BOT_NAME: "OpenClaw Bot"
-
  FEISHU_REPLY_MODE: "auto"
-
  FEISHU_THREAD_SESSION: "true"
-
  FEISHU_OFFICIAL_PLUGIN_ENABLED: "false"
-
  FEISHU_STREAMING: "true"
-
  FEISHU_FOOTER_ELAPSED: "true"
-
  FEISHU_FOOTER_STATUS: "true"
-
  FEISHU_REQUIRE_MENTION: "true"
-
-
-
  DINGTALK_MESSAGE_TYPE: "markdown"
-
  DINGTALK_DEBUG: "false"
-
  DINGTALK_SHOW_THINKING: "false"
-
  DINGTALK_ASYNC_MODE: "false"
-
-
-
  WECOM_DEFAULT_ACCOUNT: "open"
-
  WECOM_COMMANDS_ENABLED: "true"
-
  WECOM_COMMANDS_ALLOWLIST: "/new,/compact,/help,/status"
-
  WECOM_ADMIN_USERS: "admin-userid"
-
  WECOM_DYNAMIC_AGENTS_ENABLED: "true"
-
  WECOM_DYNAMIC_AGENTS_ADMIN_BYPASS: "false"
-
  WECOM_SEND_THINKING_MESSAGE: "false"
-
  WECOM_DM_CREATE_AGENT_ON_FIRST_MESSAGE: "true"
-
  WECOM_GROUP_CHAT_ENABLED: "true"
-
  WECOM_GROUP_CHAT_REQUIRE_MENTION: "true"
-
  WECOM_GROUP_CHAT_MENTION_PATTERNS: "@"
-
-
-
  WORKSPACE: "/home/node/.openclaw"
-
-
-
  OPENCLAW_GATEWAY_TOKEN: "123456"
-
  OPENCLAW_GATEWAY_BIND: "lan"
-
  OPENCLAW_GATEWAY_PORT: "18789"
-
  OPENCLAW_BRIDGE_PORT: "18790"
-
  OPENCLAW_GATEWAY_MODE: "local"
-
  OPENCLAW_GATEWAY_ALLOWED_ORIGINS: "http://192.168.100.138:18789,http://localhost"
-
  OPENCLAW_GATEWAY_ALLOW_INSECURE_AUTH: "true"
-
  OPENCLAW_GATEWAY_DANGEROUSLY_DISABLE_DEVICE_AUTH: "true"
-
  OPENCLAW_GATEWAY_AUTH_MODE: "token"
-
  OPENCLAW_PLUGINS_ENABLED: "true"
-
-
-
  OPENCLAW_TOOLS_JSON: '{"profile":"full","exec":{"host":"gateway","security":"full","ask":"off"}}'
-
-
 
 services:
 
@@ -223,7 +136,7 @@ services:
 
   container_name: openclaw-gateway
 
-  image: justlikemaki/openclaw-docker-cn-im:latest
+  image: docker.1ms.run/justlikemaki/openclaw-docker-cn-im:latest
 
   cap_add:
 
@@ -254,8 +167,6 @@ services:
   init: true
 
   restart: unless-stopped
-
-
 
  openclaw-installer:
 
@@ -298,7 +209,6 @@ services:
    - SETGID
 
    - DAC_OVERRIDE
-
 
 
 volumes:
